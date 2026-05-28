@@ -1,0 +1,231 @@
+/* ===== RESET ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  outline: none;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+  color: inherit;
+}
+
+:root {
+  /* Colors */
+  --color-primary: #1c69d3; /* BMW Blue */
+  --color-primary-dark: #0653b6; /* Darker blue for hover */
+  --color-accent: #e21936; /* BMW M Red for accents */
+
+  /* Neutrals */
+  --color-bg: #d9d0c1; /* Light gray background */
+  --color-surface: #ffffff; /* White cards/forms */
+  --color-text: #1a1a1a; /* Near black text */
+  --color-text-light: #666666; /* Gray subtext */
+  --color-border: #e0e0e0; /* Light borders */
+
+  /* Typography */
+  --font-primary: "Segoe UI", system-ui, sans-serif;
+  --font-heading: "Segoe UI", system-ui, sans-serif;
+
+  /* Spacing */
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ===== Home ===== */
+
+#root {
+  min-height: 100vh;
+}
+
+.home-container {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  padding: 1rem;
+
+  .site-title {
+    font-size: 2rem;
+    color: var(--color-primary-dark);
+    font-weight: 700;
+    padding-bottom: 2rem;
+  }
+}
+
+/* ===== Configurator ===== */
+
+.flex-col {
+  /* Flex gap Custom Property */
+  --flex-col--gap: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--flex-col--gap);
+
+  /* ---large gap--- */
+  &[data-gap="large"] {
+    --flex-col--gap: 2rem;
+  }
+}
+
+.configurator-container {
+  height: 100vh;
+  background-color: var(--color-bg);
+  padding: 1rem;
+}
+
+.configurator-form {
+  width: 100%;
+  max-width: 500px;
+
+  h2 {
+    color: var(--color-primary-dark);
+    padding-block: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  select {
+    background-color: #c5c0b8;
+    color: var(--color-text);
+    border: 2px solid #a09b93;
+    padding: 0.75rem 1rem;
+    margin-block: 2rem;
+    font-size: 1rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    width: 100%;
+    max-width: 200px;
+
+    &:focus {
+      border-color: #1c69d3;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(28, 105, 211, 0.2);
+    }
+
+    &:hover {
+      border-color: #1c69d3;
+    }
+  }
+}
+
+/* ===== Dashboard ===== */
+
+/* ===== Shared ===== */
+.step-btns {
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.notFound-container {
+  font-size: 1.5rem;
+  color: #e21936;
+  height: 100vh;
+}
+
+.packages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  font-size: 1.2rem;
+  padding-block: 1rem;
+
+  .package-option {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+}
