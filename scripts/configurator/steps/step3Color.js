@@ -6,23 +6,10 @@ const step3Color = (
   navigateStep,
   saveStepData,
   currentStep,
-  selectedModel,
+  colorsArr,
 ) => {
-  const commonColors = ["Alpine White", "Black Sapphire", "Mineral Grey"];
-
-  let modelColors = [];
-
-  if (selectedModel === "3 Series") {
-    modelColors = ["Portimao Blue", "Sunset Orange"];
-  } else if (selectedModel === "X5") {
-    modelColors = ["Phytonic Blue", "Arctic Grey"];
-  } else if (selectedModel === "M4") {
-    modelColors = ["Sao Paulo Yellow", "Isle of Man Green"];
-  }
-
-  const allColors = [...commonColors, ...modelColors];
-
-  const colorOptions = allColors
+  //
+  const colorOptions = colorsArr
     .map((item) => {
       return `<option value="${item}">${item}</option>`;
     })
@@ -37,7 +24,6 @@ const step3Color = (
 
         <div class="step-btns">
             <button type="button" class="btn btn-secondary btn-back">Back</button>
-
             <button type="submit" class="btn btn-secondary btn-next">Next</button>
         </div>
     `;

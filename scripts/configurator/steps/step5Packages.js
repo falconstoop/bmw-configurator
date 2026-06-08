@@ -6,23 +6,14 @@ const step5Packages = (
   navigateStep,
   saveStepData,
   currentStep,
-  selectedModel,
+  packagesArr,
 ) => {
-  let packages = [];
-
-  if (selectedModel === "3 Series")
-    packages = ["M Sport", "Technology", "Premium Sound"];
-  else if (selectedModel === "X5")
-    packages = ["Off Road", "Luxury Seating", "Tow Package"];
-  else if (selectedModel === "M4")
-    packages = ["Carbon Exterior", "Track Package", "M Driver's Package"];
-
-  const packagesOptions = packages
+  const packagesOptions = packagesArr
     .map((item) => {
       return `
       <div class="package-option">      
-        <input type="checkbox" value="${item}" id="${item}">
-        <label for="${item}">${item}</label>
+        <input type="checkbox" value="${item}" id="${item.replaceAll(" ", "-")}">
+        <label for="${item.replaceAll(" ", "-")}">${item}</label>
       </div>
     `;
     })
@@ -37,7 +28,6 @@ const step5Packages = (
 
         <div class="step-btns">
             <button type="button" class="btn btn-secondary btn-back">Back</button>
-
             <button type="submit" class="btn btn-secondary btn-next">Next</button>
         </div>
     `;
@@ -53,6 +43,16 @@ const step5Packages = (
     form
       .querySelectorAll("input[type='checkbox']:checked")
       .forEach((item) => packagesValues.push(item.value));
+
+    // --- method 2: Using Array.from + map ---
+    // const packagesValues = Array.from(
+    //   form.querySelectorAll("input[type='checkbox']:checked"),
+    // ).map((item) => item.value);
+
+    // --- method 3: Using spread operator + map ---
+    // const packagesValues = [
+    //   ...form.querySelectorAll("input[type='checkbox']:checked"),
+    // ].map((item) => item.value);
 
     saveStepData("packages", packagesValues);
 

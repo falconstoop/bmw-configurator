@@ -2,7 +2,7 @@
 
 A multi-step BMW car configurator single-page application built with **vanilla JavaScript** — no frameworks, no libraries.
 
-## v1.0 — Initial Working Prototype
+## v1.0 — Logic In children
 
 ### Features
 - Hash-based routing (`#/home`, `#/configurator`, `#/dashboard`)

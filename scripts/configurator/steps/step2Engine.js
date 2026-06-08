@@ -6,21 +6,10 @@ const step2Engine = (
   navigateStep,
   saveStepData,
   currentStep,
-  selectedModel,
+  enginesArr,
 ) => {
   //
-  let engines = [];
-
-  if (selectedModel === "3 Series") {
-    engines = ["2.0L Turbo", "3.0L Hybrid"];
-  } else if (selectedModel === "X5") {
-    engines = ["3.0L Diesel", "4.4L V8"];
-  } else if (selectedModel === "M4") {
-    engines = ["3.0L Twin Turbo", "4.0L Competition"];
-  }
-
-  //
-  const engineOptions = engines
+  const engineOptions = enginesArr
     .map((item) => {
       return `<option value="${item}">${item}</option>`;
     })
@@ -35,7 +24,6 @@ const step2Engine = (
 
         <div class="step-btns">
             <button type="button" class="btn btn-secondary btn-back">Back</button>
-
             <button type="submit" class="btn btn-secondary btn-next">Next</button>
         </div>
     `;

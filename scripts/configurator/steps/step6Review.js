@@ -5,23 +5,27 @@ const step6Review = (form, navigateStep, configData, currentStep) => {
   const { model, engine, color, interior, packages } = configData;
 
   form.innerHTML = `
-        <h2>Review Your Configuration Before Submitting...</h2>
+        <h2>Review Your Configuration</h2>
 
-        <p>Model is: ${model}</p>
-        <p>the engine is: ${engine}</p>
-        <p>the color is: ${color}</p>
-        <p>the interior is: ${interior}</p>
-        <p>the packages is/are: ${packages.length ? packages.join(", ") : "None"}</p>
+        <div class="review-summary">
+          <p><strong>Model:</strong> ${model}</p>
+          <p><strong>Engine:</strong> ${engine}</p>
+          <p><strong>Color:</strong>  ${color}</p>
+          <p><strong>Interior:</strong> ${interior}</p>
 
-
-
+          <p>
+          <strong>
+          Package${packages.length > 1 ? "s" : ""}
+          ${packages.length === 0 ? "" : packages.length === 1 ? " is" : " are"}
+          :</strong>
+          
+          ${packages.length ? packages.join(", ") : "none"}
+          </p>
+        </div>
 
         <div class="step-btns">
-
             <button type="button" class="btn btn-secondary btn-back">Back</button>
-
             <button type="submit" class="btn btn-secondary btn-submit">Submit</button>
-
         </div>
     `;
 

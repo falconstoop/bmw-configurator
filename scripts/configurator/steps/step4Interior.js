@@ -6,19 +6,10 @@ const step4Interior = (
   navigateStep,
   saveStepData,
   currentStep,
-  selectedModel,
+  interiorsArr,
 ) => {
-  let interiors = [];
-
-  if (selectedModel === "3 Series") {
-    interiors = ["Black Leather", "Beige Leather", "Cognac Leather"];
-  } else if (selectedModel === "X5") {
-    interiors = ["Black Vernasca", "Coffee Vernasca", "Ivory White Vernasca"];
-  } else if (selectedModel === "M4") {
-    interiors = ["Black Merino", "Fjord Blue Merino", "Kyalami Orange Merino"];
-  }
-
-  const interiorOptions = interiors
+  //
+  const interiorOptions = interiorsArr
     .map((item) => `<option value="${item}">${item}</option>`)
     .join("");
 
@@ -31,7 +22,6 @@ const step4Interior = (
 
         <div class="step-btns">
             <button type="button" class="btn btn-secondary btn-back">Back</button>
-
             <button type="submit" class="btn btn-secondary btn-next">Next</button>
         </div>
     `;

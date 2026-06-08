@@ -14,7 +14,6 @@ const step1Model = (form, navigateStep, saveStepData, currentStep) => {
 
         <div class="step-btns">
             <button type="button" class="btn btn-secondary btn-getHome">Back Home</button>
-
             <button type="submit" class="btn btn-secondary btn-next">Next</button>
         </div>
     `;
