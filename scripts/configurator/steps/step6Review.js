@@ -1,4 +1,5 @@
 //
+import saveToIndexedDB from "../../storage/storage.js";
 //
 
 const step6Review = (form, navigateStep, configData, currentStep) => {
@@ -33,9 +34,10 @@ const step6Review = (form, navigateStep, configData, currentStep) => {
     navigateStep(currentStep - 1);
   });
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    await saveToIndexedDB(configData);
     navigateStep(currentStep + 1);
   });
 };
