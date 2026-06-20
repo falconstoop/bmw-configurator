@@ -2,6 +2,8 @@
 import createHome from "./home.js";
 import notFound from "./notFound.js";
 import createConfigurator from "./scripts/configurator/configurator.js";
+import createDashboard from "./scripts/dashboard/dashboard.js";
+
 //
 
 if (location.hash === "" || location.hash === "#/") location.hash = "#/home";
@@ -19,6 +21,8 @@ const router = () => {
     createHome();
   // Configurator
   else if (currentRoute === "#/configurator") createConfigurator();
+  //  Dashboard
+  else if (currentRoute === "#/dashboard") createDashboard();
   // ---Not Found
   else notFound();
 };

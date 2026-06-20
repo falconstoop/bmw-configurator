@@ -1,5 +1,6 @@
 //
-import saveToIndexedDB from "../../storage/storage.js";
+import { saveToIndexedDB } from "../../storage/storage.js";
+
 //
 
 const step6Review = (form, navigateStep, configData, currentStep) => {

@@ -1,6 +1,8 @@
 //
 const root = document.getElementById("root");
 import { getToConfigurator } from "./scripts/configurator/configurator.js";
+import { getToDashboard } from "./scripts/dashboard/dashboard.js";
+
 //
 
 const createHome = () => {
@@ -20,6 +22,8 @@ const createHome = () => {
   div
     .querySelector(".btn-configurator")
     .addEventListener("click", getToConfigurator);
+
+  div.querySelector(".btn-dashboard").addEventListener("click", getToDashboard);
 
   root.append(div);
 };
