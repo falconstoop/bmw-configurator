@@ -9,6 +9,9 @@ import step5Packages from "./steps/step5Packages.js";
 import step6Review from "./steps/step6Review.js";
 import step7Success from "./steps/step7Success.js";
 
+// ---progressBar
+import createProgressBar from "./progressBar.js";
+
 // ---Configurator Data Functions (named-export)
 import {
   getEngines,
@@ -85,6 +88,10 @@ const createConfigurator = () => {
   // Append form (steps 1-6) or success message (step 7)
   // Step 7 is not a form — it returns its own element
   if (currentStep <= 6) {
+    // Progress bar only shows during form steps, not on success
+    const progressBar = createProgressBar(currentStep);
+    div.append(progressBar);
+
     div.append(form);
   } else {
     // reset so next visit starts from step 1
