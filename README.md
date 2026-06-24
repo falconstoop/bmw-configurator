@@ -7,6 +7,19 @@ A multi-step BMW car configurator single-page application built with **vanilla J
 📖 **How this was built:** Step-by-step breakdown of architecture, challenges, and solutions — [read the blog](https://falcon-stoop.netlify.app/#/projects/car-configurator).
 
 
+## Key Concepts:
+
+- Hash routing (3 routes)
+- State management (data + UI state)
+- Conditional rendering
+- Dependency Injection & Inversion
+- Event delegation
+- IndexedDB CRUD
+- Error handling
+- Empty state handling
+- Multiple implementation approaches documented
+
+
 ## Versions
 
 ### v1.0 — Logic in Children
@@ -46,3 +59,7 @@ A multi-step BMW car configurator single-page application built with **vanilla J
 - HTML5, CSS3, JavaScript (ES Modules)
 - IndexedDB with `idb` wrapper
 - No frameworks
+
+
+
+

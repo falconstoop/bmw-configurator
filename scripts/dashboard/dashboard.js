@@ -14,7 +14,31 @@
 //   createDashboard → createConfigCard (config, emptyState) → card
 //   card delete btn → deleteConfigFromStorage(id) + card.remove() + updateEmptyState(grid, emptyState)
 
+// --------------------------------------------------------------------
+// ===== Implementation Approaches =====
 //
+//--- Method 1 (Current): Separate createConfigCard function, per-button handlers, toggle CSS class for empty state.
+//   - More modular, each card manages its own lifecycle.
+//   - Empty state exists in DOM, toggled via CSS class. No appending/removing elements.
+//   - Surgical DOM updates — only the deleted card is removed, no full rerender.
+//
+//--- Method 2 (Alternative): Single function with early return + event delegation.
+//   - Cleaner flow with early exit when no data exists.
+//   - Single event listener on the grid instead of per-button handlers.
+//   - Empty state appended/removed dynamically instead of toggled via CSS.
+//   - Simpler for small pages, harder to extend with card-specific logic.
+//
+//--- Method 3 (State-Driven / React-Like): Module-level state + full rerender on every change.
+//   - Data stored in a module-level variable (configs array), not fetched inside render.
+//   - Every delete updates the state array, then triggers a full rerender.
+//   - UI always reflects the exact current state — one source of truth.
+//   - The React mental model: state changes → re-render → UI is a function of state.
+//   - Trade-off: Less performant (full rebuild on every action), but simpler to reason about.
+//
+// This project uses Method 1 for better separation of concerns and surgical DOM control.
+
+// ----------------------------------------------------
+
 const root = document.getElementById("root");
 
 import { getHome } from "../../home.js";
@@ -155,3 +179,172 @@ const createDashboard = async () => {
 export const getToDashboard = () => (location.hash = "#/dashboard");
 
 export default createDashboard;
+
+// ------------------Method 2--------------------
+
+/*
+const emptyState = () => {
+  const div = document.createElement("div");
+  div.className = "empty-state";
+
+  div.innerHTML = `
+    <p>No configurations saved yet.</p>
+    <p>Go build your first BMW!</p>
+  `;
+
+  return div;
+};
+
+const createDashboard = async () => {
+  root.innerHTML = "";
+
+  const div = document.createElement("div");
+  div.className = "dashboard-container";
+
+  // Step 1 & 2: Fetch data with error handling
+  let configsFromStorage = [];
+  try {
+    configsFromStorage = await getAllConfigsFromStorage();
+  } catch (err) {
+    // Fallback to empty array — empty state handles it naturally
+  }
+
+  // Step 3: Conditional rendering — empty state on initial load
+  // Early return: no data → show empty state → stop, no further code runs
+  if (!configsFromStorage.length) {
+    div.innerHTML = `<h2 class="dashboard-title">Dashboard</h2>`;
+    div.append(emptyState());
+    root.append(div);
+    return;
+  }
+
+  // Step 4: DOM manipulation — build cards from data
+  const configsCards = configsFromStorage
+    .map(({ id, model, engine, color, interior, packages }) => {
+      return `
+        <div class="config-card" data-id="${id}">
+          <div class="config-card-header">
+            <span class="config-card-model">${model}</span>
+            <button type="button" class="btn-delete">✕</button>
+          </div>
+          <div class="config-card-details">
+            <p><strong>Engine:</strong> ${engine}</p>
+            <p><strong>Color:</strong> ${color}</p>
+            <p><strong>Interior:</strong> ${interior}</p>
+            <p><strong>Packages:</strong> ${packages.join(", ")}</p>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  div.innerHTML = `
+    <h2 class="dashboard-title">Dashboard</h2>
+    <div class="configs-grid">${configsCards}</div>
+  `;
+
+  // Step 5: Event binding + dynamic conditional rendering
+  // Event delegation — one listener on the grid, not per button
+  div.querySelector(".configs-grid").addEventListener("click", async (e) => {
+    // Only respond to clicks on delete buttons
+    if (!e.target.classList.contains("btn-delete")) return;
+
+    const card = e.target.closest(".config-card");
+    const grid = card.parentElement;
+
+    // Delete from storage, then remove from DOM
+    await deleteConfigFromStorage(Number(card.dataset.id));
+    card.remove();
+
+    // Dynamic empty state check — same condition as Step 3, triggered by user action
+    if (!grid.children.length) {
+      div.append(emptyState());
+    }
+  });
+
+  root.append(div);
+};
+*/
+
+// -------------Method 3 (State-Driven / React-Like)--------------
+
+/*
+// Store configs in module-level variable — state lives outside the render function
+let configs = [];
+
+const createDashboard = () => {
+  root.innerHTML = "";
+
+  const div = document.createElement("div");
+  div.className = "dashboard-container";
+
+  // No async — data is already loaded in state
+  // Conditional rendering: empty state or grid
+  if (!configs.length) {
+    div.innerHTML = `
+      <h2 class="dashboard-title">Dashboard</h2>
+      <div class="empty-state">
+        <p>No configurations saved yet.</p>
+        <p>Go build your first BMW!</p>
+      </div>
+    `;
+    root.append(div);
+    return;
+  }
+
+  // Build cards from state
+  const configsCards = configs
+    .map(({ id, model, engine, color, interior, packages }) => {
+      return `
+        <div class="config-card" data-id="${id}">
+          <div class="config-card-header">
+            <span class="config-card-model">${model}</span>
+            <button type="button" class="btn-delete">✕</button>
+          </div>
+          <div class="config-card-details">
+            <p><strong>Engine:</strong> ${engine}</p>
+            <p><strong>Color:</strong> ${color}</p>
+            <p><strong>Interior:</strong> ${interior}</p>
+            <p><strong>Packages:</strong> ${packages.join(", ")}</p>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  div.innerHTML = `
+    <h2 class="dashboard-title">Dashboard</h2>
+    <div class="configs-grid">${configsCards}</div>
+  `;
+
+  // Per-button handlers — after DOM exists
+  div.querySelectorAll(".btn-delete").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const card = btn.closest(".config-card");
+      const id = Number(card.dataset.id);
+
+      await deleteConfigFromStorage(id);
+      configs = configs.filter((c) => c.id !== id); // Update state
+      createDashboard(); // Full rerender from new state
+    });
+  });
+
+  root.append(div);
+};
+
+// Initial load — fetch data into state, then render
+const initDashboard = async () => {
+  try {
+    configs = await getAllConfigsFromStorage();
+  } catch (err) {
+    configs = [];
+  }
+  createDashboard();
+};
+
+// Call initDashboard() instead of createDashboard() in the router
+// Method 3: State-driven. One source of truth (configs array).
+// Every change updates state → full rerender → UI always reflects exact state.
+// This is the React mental model: state changes trigger re-renders.
+// Trade-off: Less performant (full rebuild), but simpler to reason about.
+*/
